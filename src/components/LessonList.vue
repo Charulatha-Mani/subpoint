@@ -10,7 +10,7 @@
           placeholder="Search"
           aria-label="Search"
         />
-        <img src="search.gif" width="40" height="40" />
+        <img src="images/search.gif" width="40" height="40" />
       </p>
     </div>
 
@@ -90,9 +90,9 @@
         v-on:click="addToCart(lesson)"
         v-if="canAddToCart(lesson)"
       >
-        <i class="fas fa-plus"></i> Add to cart"
+        <i class="fas fa-plus"></i> Add to cart
       </button>
-      <button disabled v-else><i class="fas fa-plus"></i> Add to cart"</button>
+      <button disabled v-else><i class="fas fa-plus"></i> Add to cart</button>
     </div>
   </div>
 </template>
@@ -110,6 +110,7 @@ export default {
     addToCart(lesson) {
     //   console.log("Added lesson", lesson.id);
       this.$emit("addLesson", lesson);
+      this.cart.push(lesson);
     },
     canAddToCart(lesson) {
       return lesson.spaces > 0;

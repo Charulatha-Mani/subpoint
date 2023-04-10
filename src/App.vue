@@ -6,11 +6,11 @@
     />
     <link rel="stylesheet" href="style.css" />
     <header>
-      <img src="gradcap.png" height="40" width="40" />
+      <img src="images/gradcap.png" height="40" width="40" />
       <h1 class="heading">SUBPOINT</h1>
       <!-- Created cart button that activates only if there's something in the cart -->
       <button
-        v-on:click="showCheckout"
+        v-on:click="showCheckout()"
         v-if="cartCount && showProduct"
         id="cartBtn"
       >
@@ -89,12 +89,13 @@ export default {
     },
     showCheckout() {
       this.showProduct = this.showProduct ? false : true;
-    }
+    },
+    
   },
-  // computed: {
-  //   cartCount() {
-  //     return this.cart.length || ''
-  //   },
-  // }
+  computed: {
+    cartCount() {
+      return this.cart.length || ''
+    },
+  }
 };
 </script>
