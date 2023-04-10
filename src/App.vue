@@ -31,7 +31,7 @@
     </div>
 
     <div class="checkout" v-else>
-      <button v-on:click="showCheckout" id="carttobackbtn">
+      <button v-on:click="showCheckout()" id="carttobackbtn">
         <span class="fas fa-arrow-left"> Back </span>
       </button>
 
@@ -46,6 +46,7 @@
 <script>
 import lessonList from "./components/LessonList.vue";
 import checkout from "./components/CheckoutForm.vue";
+
 
 export default {
   name: "App",
@@ -86,6 +87,9 @@ export default {
       }
       lesson.spaces++;
     },
+    showCheckout() {
+      this.showProduct = this.showProduct ? false : true;
+    }
   },
   // computed: {
   //   cartCount() {
