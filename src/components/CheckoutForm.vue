@@ -46,13 +46,15 @@
 
       <h2 class="pageHeader">Your Cart</h2>
       <!-- Loops through the products and if they match the ID in the cart it shows it on this page as well as their frequency -->
-      <div v-for="cartItem in cart" class="cartProducts" :key="cartItem.id">
-        <!-- <span v-text="showInCart(lesson, lesson._id)"></span> -->
-        <!-- <span v-if="counter(lesson._id)">x</span>
+      <div v-for="lesson in lessons" class="cartProducts" :key="lesson.id">
+        <span v-text="showInCart(lesson, lesson._id)"></span>
+        <span v-if="counter(lesson._id) > 0"
+          >&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;&nbsp;&nbsp;&nbsp;</span
+        >
         <span v-text="counter(lesson._id)"></span>
-        <span v-if="counter(lesson._id)"> AED</span> -->
-        <!-- <span v-text="showInCartPrice(lesson, lesson._id)"></span> -->
-        <p>{{cartItem.subject}}</p>
+        <span v-if="counter(lesson._id) > 0">&nbsp;&nbsp;&nbsp;&nbsp;AED</span>
+        <span v-text="showInCartPrice(lesson, lesson._id)"></span>
+        <!-- <p>{{cartItem.subject}}</p> -->
         <button
           v-text="inCartButton"
           v-if="counter(lesson._id) > 0"
@@ -66,48 +68,61 @@
 </template>
 
 <script>
+var nameRegExp = new RegExp("^[A-Za-z]{1,}$");
+// Created RegEx for the phone number to start with '05' and have 9 other digits
+var phoneRegExp = new RegExp("^05[0-9]{8,8}$");
+
 export default {
   name: "Form",
   props: ["cart"],
   data() {
     return {
-        firstName: "",
-        lastName: "",
-        phoneNo: ""
+      firstName: "",
+      lastName: "",
+      phoneNo: "",
     };
   },
   methods: {
     removeFromCart(lesson) {
-        this.$emit('removeLesson', lesson.id)
+      this.$emit("removeLesson", lesson.id);
     },
     placeOrder() {
-        alert("Order Submitted!");
-            //   location.reload();
+      alert("Order Submitted!");
+      //   location.reload();
     },
     counter(_id) {
-            let counter = 0;
-            for (let i = 0; i < this.cart.length; i++) {
-              if (this.cart[i] === _id) {
-                counter++;
-              }
-            }
-            if (counter > 0) {
-              return counter;
-            }
-          },
-          // If the product is in the cart at least once it will display it on the checkout page
-          showInCart(lesson, _id) {
-            let counter = this.counter(_id);
-            if (counter > 0) {
-              return lesson.subject;
-            }
-          },
-          showInCartPrice(lesson, _id) {
-            let counter = this.counter(_id);
-            if (counter > 0) {
-              return lesson.price;
-            }
-          },
-  }
+      let counter = 0;
+      for (let i = 0; i < this.cart.length; i++) {
+        if (this.cart[i] === _id) {
+          counter++;
+        }
+      }
+      if (counter > 0) {
+        return counter;
+      }
+    },
+    // If the product is in the cart at least once it will display it on the checkout page
+    showInCart(lesson, _id) {
+      let counter = this.counter(_id);
+      if (counter > 0) {
+        return lesson.subject;
+      }
+    },
+    showInCartPrice(lesson, _id) {
+      let counter = this.counter(_id);
+      if (counter > 0) {
+        return lesson.price;
+      }
+    },
+  },
+  computed: {
+    emptyFields() {
+      return (
+        !nameRegExp.test(this.firstName) ||
+        !nameRegExp.test(this.lastName) ||
+        !phoneRegExp.test(this.phoneNo)
+      );
+    },
+  },
 };
 </script>
