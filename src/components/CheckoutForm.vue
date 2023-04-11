@@ -20,7 +20,7 @@
         Place Order
       </button>
       <button
-        v-on:click="placeOrder()"
+        @click.prevent="placeOrder()"
         v-else
         id="cart-btn"
         class="placeOrdBtn"
@@ -58,7 +58,7 @@
         <button
           v-text="inCartButton"
           v-if="counter(lesson._id) > 0"
-          v-on:clicl="removeFromCart(lesson)"
+          v-on:click="removeFromCart(lesson)"
           id="removeItmBtn"
         ></button>
       </div>
@@ -86,8 +86,10 @@ export default {
     removeFromCart(lesson) {
       this.$emit("removeLesson", lesson.id);
     },
-    placeOrder() {
+    placeOrder(event) {
+      
       alert("Order Submitted!");
+      event.preventDefault();
       //   location.reload();
     },
     counter(_id) {
