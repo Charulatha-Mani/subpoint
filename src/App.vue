@@ -24,6 +24,7 @@
       </button>
     </header>
 
+    <!-- Lessons are displayed if the showProduct is true -->
     <div v-if="showProduct">
       <div>
         <lesson-list :lessons="lessons" @addLesson="addToCart"></lesson-list>
